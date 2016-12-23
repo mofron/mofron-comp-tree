@@ -1,2 +1,2 @@
-# mofron-parts-tree
-tree component for mofron
+# mofron-comp-tree
+Tree Component for mofron
