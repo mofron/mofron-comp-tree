@@ -47,7 +47,7 @@ mf.comp.Tree = class extends Accordion {
             this.title(
 	        new mf.Component({
 		    child: [ this.switch(), this.index() ],
-                    style: { "display" : "flex" }
+                    style: { "display" : "flex" },
 		})
 	    );
             
@@ -77,7 +77,6 @@ mf.comp.Tree = class extends Accordion {
 		}
 	    }
 	    this.event(new evStyle(sty_ev, "margin-left"));
-            
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -91,14 +90,8 @@ mf.comp.Tree = class extends Accordion {
      */
     beforeRender () {
         try {
-            super.beforeRender();
-	    
-            if (0 === this.child().length) {
-                this.switch().visible(false);
-                this.height("0rem");
-            }
-
-	    this.leftConfig();
+           super.beforeRender();
+	   this.leftConfig();
 	} catch (e) {
 	    console.error(e.stack);
 	    throw e;
@@ -120,6 +113,9 @@ mf.comp.Tree = class extends Accordion {
 	    }
 	    if (undefined !== prm) {
                 prm.style({ "margin-left": "0.1rem" }, {loose:true});
+		if (null !== prm.height()) {
+                    this.title().height(prm.height());
+		}
 	    }
 	    return this.innerComp("index", prm, mf.Component);
 	} catch (e) {
@@ -253,6 +249,31 @@ mf.comp.Tree = class extends Accordion {
             );
 	} catch (e) {
             console.error(e.stack);
+	    throw e;
+	}
+    }
+    
+    /**
+     * folding speed
+     * 
+     * @param (number) folding speed (millisecond)
+     * @return (number) folding speed
+     * @type parameter
+     */
+    speed (prm) {
+        try {
+	    let ret = super.speed(prm);
+            if (undefined !== prm) {
+                let chd = this.child();
+		for (let cidx in chd) {
+                    if (true === mf.func.isInclude(chd[cidx],"Tree")) {
+		        chd[cidx].speed(prm);
+		    }
+		}
+	    }
+	    return ret;
+	} catch (e) {
+	    console.error(e.stack);
 	    throw e;
 	}
     }

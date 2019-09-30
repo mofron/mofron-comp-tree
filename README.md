@@ -53,4 +53,5 @@ console.log(evt2.text());
 | | switch | mofron-comp-switch | switch component |
 | | clickEvent | function | function for click event |
 | | | mixed | function parameter |
+| | speed | number | folding speed (millisecond) |
 
