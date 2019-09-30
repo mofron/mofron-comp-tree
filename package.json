@@ -1,0 +1,28 @@
+{
+  "name": "mofron-comp-tree",
+  "version": "0.0.4",
+  "description": "tree component for mofron",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mofron/mofron-comp-tree.git"
+  },
+  "dependencies": {
+    "mofron-comp-clktext" : "",
+    "mofron-comp-clksw" : "",
+    "mofron-comp-accordion" : "",
+    "mofron-event-style" : ""
+  },
+  "keywords": [
+    "front-end"
+  ],
+  "author": "simparts",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mofron/mofron-comp-tree/issues"
+  },
+  "homepage": "https://github.com/mofron/mofron-comp-tree#readme"
+}
