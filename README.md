@@ -50,6 +50,7 @@ console.log(evt2.text());
 | | text | mixed | string: tree index string |
 | | | | mofron-comp-text: tree index text component |
 | | textSize | string (size) | text size |
+| | clkconts | string | display component of object key that when this tree is clicked. |
 | | switch | mofron-comp-switch | switch component |
 | | clickEvent | function | function for click event |
 | | | mixed | function parameter |

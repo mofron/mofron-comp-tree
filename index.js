@@ -28,7 +28,7 @@ mf.comp.Tree = class extends Accordion {
             throw e;
         }
     }
-
+    
     /**
      * initialize dom contents
      * 
@@ -59,7 +59,7 @@ mf.comp.Tree = class extends Accordion {
 		    } else if ( (false === c2) && (1 === c3.switch().index()) ) {
                         c3.switch().switching(0);
 		    }
-		    c3.notifyClick(c3,c3);
+		    c3.notifyClick(c3);
 		} catch (e) {
                     console.error(e.stack);
 		    throw e;
@@ -92,12 +92,17 @@ mf.comp.Tree = class extends Accordion {
         try {
            super.beforeRender();
 	   this.leftConfig();
+	   if ( (null !== this.clkconts()) &&
+	        (undefined !== mf.objkey[this.clkconts()]) &&
+	        ("none" !== mf.objkey[this.clkconts()].style("display")) ) {
+               this.getRootTree().curconts(this.clkconts());
+	   }
 	} catch (e) {
 	    console.error(e.stack);
 	    throw e;
 	}
     }
-
+    
     /**
      * tree index text
      * 
@@ -163,6 +168,38 @@ mf.comp.Tree = class extends Accordion {
     }
     
     /**
+     * click contents key
+     * 
+     * @param (string) display component of object key that when this tree is clicked.
+     * @return (string) object key name
+     * @type parameter
+     */
+    clkconts (prm) {
+        try {
+            return this.member("clkconts", "string", prm);
+	} catch (e) {
+            console.error(e.stack);
+            throw e;
+        }
+    }
+    
+    /**
+     * current contents key
+     * 
+     * @param (string) current display object key
+     * @return (string) object key name
+     * @type private
+     */
+    curconts (prm) {
+        try {
+            return this.member("curconts", "string", prm);
+	} catch (e) {
+	    console.error(e.stack);
+	    throw e;
+	}
+    }
+    
+    /**
      * switch component
      * 
      * @param (mofron-comp-switch) switch component
@@ -206,23 +243,66 @@ mf.comp.Tree = class extends Accordion {
     }
     
     /**
+     * get root tree component
+     * 
+     * @return (mofron-comp-tree) root tree component
+     * @type function
+     */
+    getRootTree () {
+        try {
+            let ret = this;  // for root tree check
+            while (null !== ret) {
+                if (true === mf.func.isInclude(ret,"Tree")) {
+                    if (true === mf.func.isInclude(ret.parent(),"Tree")) {
+		        ret = ret.parent();
+                        continue;
+                    } else {
+                        break;
+                    }
+                } else {
+                    throw new Error("could not find root tree");
+                }
+            }
+	    return ret;
+	} catch (e) {
+            console.error(e.stack);
+	    throw e;
+	}
+    }
+
+    /**
      * notify click event
      * 
-     * @param (mofron-comp-tree) target of root-tree-check tree component
      * @param (mofron-comp-tree) clicked tree elements
      * @type private
      */
-    notifyClick (prm, clk) {
+    notifyClick (clk) {
         try {
-            if ( (null !== prm.parent()) &&
-	         (true === mf.func.isInclude(prm.parent(),"Tree")) ) {
-                this.notifyClick(prm.parent(),clk);
-                return;
+            let root = this.getRootTree();
+	    /* check contents */
+            if ( (null !== clk.clkconts()) && (undefined !== mf.objkey[clk.clkconts()]) ) {
+                if ( (null !== root.curconts()) && (undefined !== mf.objkey[root.curconts()]) ) {
+                    mf.objkey[root.curconts()].visible(
+		        false,
+                        () => {
+                            try {
+                                mf.objkey[clk.clkconts()].visible(true);
+			    } catch (e) {
+                                console.error(e.stack);
+				throw e;
+			    }
+			}
+		    );
+		} else {
+                    mf.objkey[clk.clkconts()].visible(true);
+		}
+		root.curconts(clk.clkconts());
 	    }
+            
 	    /* execute click event */
-	    let evt = prm.clickEvent();
+	    let evt = root.clickEvent();
 	    for (let eidx in evt) {
-                evt[eidx][0](prm, clk, evt[eidx][1]);
+                evt[eidx][0](root, clk, evt[eidx][1]);
 	    }
 	} catch (e) {
 	    console.error(e.stack);
