@@ -3,8 +3,6 @@
 
 tree component for mofron
 
-## Attention
- - 'title' is private. please use 'index' or 'text' parameter instead of 'title'
 
 # Install
 ```
@@ -15,29 +13,25 @@ npm install mofron mofron-comp-tree
 ```html
 <require>
     <tag module="mofron-comp-tree">Tree</tag>
-    <tag module="mofron-comp-text">Text</tag>
 </require>
 
-<script name=evt run=init>
-console.log(evt2.text());
+<script run=init name=evt>
+console.log(evt2.index());
 </script>
 
-<Tree index="mofron" baseColor=#fafafa clickEvent=@evt speed=300>
-    <Tree index="Component">
+<Tree baseColor=#fafafa title="mofron" clickEvent=@evt>
+    <param>
+        <ttlhei>(0.5rem,0.4rem)</ttlhei>
+        <speed>500</speed>
+    </param>
+
+    <Tree title="Component" elmhei=0.3rem>
         <Tree>Button</Tree>
         <Tree>Header</Tree>
     </Tree>
-    <Tree index="Event">
+    <Tree title="Event" elmhei=0.3rem>
         <Tree>Click</Tree>
         <Tree>Drag</Tree>
-    </Tree>
-    <Tree index="Effect">
-        <Tree>Fade</Tree>
-        <Tree>Shadow</Tree>
-    </Tree>
-    <Tree index="Layout">
-        <Tree>Grid</Tree>
-        <Tree>Margin</Tree>
     </Tree>
 </Tree>
 ```
@@ -45,14 +39,17 @@ console.log(evt2.text());
 
 |Simple<br>Param | Parameter Name | Type | Description |
 |:--------------:|:---------------|:-----|:------------|
+|◯| title | mixed | string: tree text |
+| | | | component: tree text component |
 | | index | mixed | string: tree index string |
 | | | | mofron-comp-text: tree index text component |
-| | text | mixed | string: tree index string |
-| | | | mofron-comp-text: tree index text component |
-| | textSize | string (size) | text size |
-| | clkconts | string | display component of object key that when this tree is clicked. |
+| | ttlhei | string (size) | title height |
+| | | string (size) | element title height |
+| | elmhei | string (size) | element title height |
 | | switch | mofron-comp-switch | switch component |
 | | clickEvent | function | function for click event |
 | | | mixed | function parameter |
 | | speed | number | folding speed (millisecond) |
+| | height | string (size) | tree height |
+| | | object | option |
 
