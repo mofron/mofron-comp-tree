@@ -174,7 +174,8 @@ mf.comp.Tree = class extends Accordion {
 		return [ this.index().height(), this.elmhei() ];
 	    }
             /* setter */
-            this.title().theme({ Component: { height: prm } });
+	    this.switch().height(prm);
+            this.index().height(prm);
 	    this.elmhei(elm);
 	} catch (e) {
             console.error(e.stack);

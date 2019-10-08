@@ -1,6 +1,6 @@
 {
   "name": "mofron-comp-tree",
-  "version": "0.0.7",
+  "version": "0.0.9",
   "description": "tree component for mofron",
   "main": "index.js",
   "scripts": {
